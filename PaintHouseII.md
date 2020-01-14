@@ -3,79 +3,78 @@
 时间复杂度比较高
 
   ```
-  class Solution 
-  {
-  public:
-      /**
-       * @param costs: n x k cost matrix
-       * @return: an integer, the minimum cost to paint all houses
-       */
-      int minCostII(vector<vector<int>> &costs) 
-  	{
-          // write your code here
-  		int row = costs.size();
-  		if(row == 0)
-  		{
-  		    return 0;
-  		}
-  		
-  		int col = costs[0].size();
-  		if(col == 0)
-  		{
-  		    return 0;
-  		}
-  		
-  		vector<vector<int>> dp(row,vector<int>(col));
-  		
-  		for(int j = 0;j < col;j++)
-  		{
-  			dp[row - 1][j] = costs[row - 1][j];
-  			//cout << dp[row - 1][j] << " ";
-  		}
-  		
-  		//cout << endl;
-  		
-  		int mincosts = INT_MAX;
-  		for(int i = row - 2;i >= 0;i--)
-  		{
-  			for(int j = 0;j < col;j++)
-  			{
-  				for(int k = 0;k < col;k++)
-  				{
-  					if(k == j)
-  					{
-  						continue;
-  					}
-  					
-  					if(mincosts > dp[i + 1][k])
-  					{
-  					    //cout << mincosts << " ";
-  						mincosts = dp[i + 1][k];
-  					}
-  				}
-  				
-  				dp[i][j] = costs[i][j] + mincosts;
-                  cout << dp[i][j] << " ";
-                  mincosts = INT_MAX;				
-  			}
-  			cout << endl;
-  		}
-  		
-  		int result = dp[0][0];
-  		
-  		for(int j = 0;j < col;j++)
-  		{
-  		    //cout << dp[0][j] << " ";
-  			if(dp[0][j] < result)
-  			{
-  				result = dp[0][j];
-  			}
-  		}
-  		
-  		return result;
-      }
-  };
-  
+class Solution 
+{
+public:
+    /**
+     * @param costs: n x k cost matrix
+     * @return: an integer, the minimum cost to paint all houses
+     */
+    int minCostII(vector<vector<int>> &costs) 
+	{
+        // write your code here
+		int row = costs.size();
+		if(row == 0)
+		{
+		    return 0;
+		}
+		
+		int col = costs[0].size();
+		if(col == 0)
+		{
+		    return 0;
+		}
+		
+		vector<vector<int>> dp(row,vector<int>(col));
+		
+		for(int j = 0;j < col;j++)
+		{
+			dp[row - 1][j] = costs[row - 1][j];
+			//cout << dp[row - 1][j] << " ";
+		}
+		
+		//cout << endl;
+		
+		int mincosts = INT_MAX;
+		for(int i = row - 2;i >= 0;i--)
+		{
+			for(int j = 0;j < col;j++)
+			{
+				for(int k = 0;k < col;k++)
+				{
+					if(k == j)
+					{
+						continue;
+					}
+					
+					if(mincosts > dp[i + 1][k])
+					{
+					    //cout << mincosts << " ";
+						mincosts = dp[i + 1][k];
+					}
+				}
+				
+				dp[i][j] = costs[i][j] + mincosts;
+                //cout << dp[i][j] << " ";
+                mincosts = INT_MAX;				
+			}
+			//cout << endl;
+		}
+		
+		int result = dp[0][0];
+		
+		for(int j = 0;j < col;j++)
+		{
+		    //cout << dp[0][j] << " ";
+			if(dp[0][j] < result)
+			{
+				result = dp[0][j];
+			}
+		}
+		
+		return result;
+    }
+};
   ```
 
 - DP解法二
