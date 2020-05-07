@@ -2,7 +2,7 @@
 
   下面的思路是老师上课讲的思路：
 
-```
+```c++
   class Solution 
   {
   public:
