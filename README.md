@@ -1,3 +1,5 @@
+# 第一次课
+  [116. Jump Game](https://www.lintcode.com/problem/jump-game/my-submissions)
 # 第二次课
 
 - 坐标型动态规划
