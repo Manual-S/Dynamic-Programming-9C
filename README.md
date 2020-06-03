@@ -11,7 +11,23 @@
 
 [669. Coin Change](https://www.lintcode.com/problem/coin-change/description)
 
+> 给出不同面额的硬币以及一个总金额. 写一个方法来计算给出的总金额可以换取的最少的硬币数量. 如果已有硬币的任意组合均无法与总金额面额相等, 那么返回 `-1`.
+>
+> ### Example
+>
+> **样例1**
+>
+> ```c++
+> 输入：
+> [1, 2, 5]
+> 11
+> 输出： 3
+> 解释： 11 = 5 + 5 + 1
+> ```
+
 - DP解法
+
+  🎈 这个是一开始我自己写的程序，写的还是比较差劲。😂
 
   ```c++
   class Solution 
@@ -103,6 +119,12 @@
 
 [114. Unique Paths](https://www.lintcode.com/problem/unique-paths/description)
 
+> 有一个机器人的位于一个 *m* × *n* 个网格左上角。
+>
+> 机器人每一时刻只能向下或者向右移动一步。机器人试图达到网格的右下角。
+>
+> 问有多少条不同的路径？
+
   - DP解法
   
     ```c++
@@ -142,7 +164,22 @@
 
   [116. Jump Game](https://www.lintcode.com/problem/jump-game/my-submissions)
 
-- dfs解法
+> 给出一个非负整数数组，你最初定位在数组的第一个位置。　　　
+>
+> 数组中的每个元素代表你在那个位置可以跳跃的最大长度。　　　　
+>
+> 判断你是否能到达数组的最后一个位置。
+>
+> ### Example
+>
+> ***样例 1***
+>
+> ```c++
+> 输入 : [2,3,1,1,4]
+> 输出 : true
+> ```
+
+- DFS解法
 
 ```C++
 class Solution 
@@ -176,7 +213,20 @@ private:
     }
 };
 ```
+🎈 这个题目在lint code上用DFS解法不会超时，但在leet code上这个题目即使用DP解法也会超时，需要用到贪心思想。
+
 [191. Maximum Product Subarray](https://www.lintcode.com/problem/maximum-product-subarray/description)
+
+> 找出一个序列中乘积最大的连续子序列（至少包含一个数）。
+>
+> ### Example
+>
+> **样例 1:**
+>
+> ```c++
+> 输入:[2,3,-2,4]
+> 输出:6
+> ```
 
 - DP解法
 
@@ -220,6 +270,10 @@ private:
 ## 坐标型动态规划
 
   [115. Unique Paths II](https://www.lintcode.com/problem/unique-paths-ii/description)
+
+> 现在考虑网格中有障碍物，那样将会有多少条不同的路径？
+>
+> 网格中的障碍和空位置分别用 1 和 0 来表示。
 
 - DP解法
 
@@ -298,65 +352,78 @@ private:
 
 - 老师上课写的DP程序
 
-    ```c++
-    class Solution {
-    public:
-        /**
-         * @param obstacleGrid: A list of lists of integers
-         * @return: An integer
-         */
-        int uniquePathsWithObstacles(vector<vector<int>> &obstacleGrid) 
-        {
-            if(obstacleGrid.empty())
-            {
-                return true;
-            }
-            // write your code here
-            int row = obstacleGrid.size();
-            int col = obstacleGrid[0].size();
-            
-            vector<vector<int>> dp(row,vector<int>(col));
-            
-            for(int i = 0;i < row;i++)
-            {
-                for(int j = 0;j < col;j++)
-                {
-                    dp[i][j] = 0;
-                    if(obstacleGrid[i][j] == 1)
-                    {
-                        dp[i][j] = 0;
-                        //cout << i  << " " << j << " " << dp[i][j] << endl;
-                        continue;
-                    }
-                    
-                    if(i == 0 && j == 0)
-                    {
-                        dp[i][j] = 1;
-                        //cout << i  << " " << j << " " << dp[i][j] << endl;
-                        continue;
-                    }
-                    
-                    if(i > 0)
-                    {
-                        dp[i][j] = dp[i][j] + dp[i - 1][j];
-                    }
-                    
-                    if(j > 0)
-                    {
-                        dp[i][j] = dp[i][j] + dp[i][j - 1];
-                    }
-                    //cout << i  << " " << j << " " << dp[i][j] << endl;
-                }
-            }
-            
-            return dp[row - 1][col - 1];
-        }
-    };
-    ```
+  ```c++
+  class Solution {
+  public:
+      /**
+       * @param obstacleGrid: A list of lists of integers
+       * @return: An integer
+       */
+      int uniquePathsWithObstacles(vector<vector<int>> &obstacleGrid) 
+      {
+          if(obstacleGrid.empty())
+          {
+              return true;
+          }
+          // write your code here
+          int row = obstacleGrid.size();
+          int col = obstacleGrid[0].size();
+          
+          vector<vector<int>> dp(row,vector<int>(col));
+          
+          for(int i = 0;i < row;i++)
+          {
+              for(int j = 0;j < col;j++)
+              {
+                  dp[i][j] = 0;
+                  if(obstacleGrid[i][j] == 1)
+                  {
+                      dp[i][j] = 0;
+                      //cout << i  << " " << j << " " << dp[i][j] << endl;
+                      continue;
+                  }
+                  
+                  if(i == 0 && j == 0)
+                  {
+                      dp[i][j] = 1;
+                      //cout << i  << " " << j << " " << dp[i][j] << endl;
+                      continue;
+                  }
+                  
+                  if(i > 0)
+                  {
+                      dp[i][j] = dp[i][j] + dp[i - 1][j];
+                  }
+                  
+                  if(j > 0)
+                  {
+                      dp[i][j] = dp[i][j] + dp[i][j - 1];
+                  }
+                  //cout << i  << " " << j << " " << dp[i][j] << endl;
+              }
+          }
+          
+          return dp[row - 1][col - 1];
+      }
+  };
+  ```
 
-    
+  
 
   [397. Longest Continuous Increasing Subsequence](https://www.lintcode.com/problem/longest-continuous-increasing-subsequence/description)
+
+  > 给定一个整数数组（下标从 0 到 n-1， n 表示整个数组的规模），请找出该数组中的最长上升连续子序列。（最长上升连续子序列可以定义为从右到左或从左到右的序列。）
+  >
+  > ### Example
+  >
+  > **样例 1：**
+  >
+  > ```c++
+  > 输入：[5, 4, 2, 1, 3]
+  > 输出：4
+  > 解释：
+  > 给定 [5, 4, 2, 1, 3]，其最长上升连续子序列（LICS）为 [5, 4, 2, 1]，返回 4。
+  > ```
 
 - DP解法
 
@@ -403,6 +470,21 @@ private:
 
   [110. Minimum Path Sum](https://www.lintcode.com/problem/minimum-path-sum/description)
 
+  > 给定一个只含非负整数的m*n网格，找到一条从左上角到右下角的可以使数字和最小的路径。
+  >
+  > 
+  >
+  > ### Example
+  >
+  > ```c++
+  > 样例 1:
+  > 	输入:  [[1,3,1],[1,5,1],[4,2,1]]
+  > 	输出: 7
+  > 	
+  > 	样例解释：
+  > 	路线为： 1 -> 3 -> 1 -> 1 -> 1。
+  > ```
+  
   - DP解法
   
     ```c++
@@ -450,6 +532,24 @@ private:
     
   
   [553. Bomb Enemy](https://www.lintcode.com/problem/bomb-enemy/description)
+  
+  > 给定一个二维矩阵, 每一个格子可能是一堵墙 `W`,或者 一个敌人 `E` 或者空 `0` (数字 '0'), 返回你可以用一个炸弹杀死的最大敌人数. 炸弹会杀死所有在同一行和同一列没有墙阻隔的敌人。 由于墙比较坚固，所以墙不会被摧毁.
+  >
+  > ### Example
+  >
+  > **样例1**
+  >
+  > ```c++
+  > 输入:
+  > grid =[
+  >      "0E00",
+  >      "E0WE",
+  >      "0E00"
+  > ]
+  > 输出: 3
+  > 解释:
+  > 把炸弹放在 (1,1) 能杀3个敌人
+  > ```
   
   - 暴力解法
   
@@ -520,6 +620,8 @@ private:
         }
     };
     ```
+  
+    🎈 暴力解法没办法过lint code的OJ。
   
   - DP解法
   
@@ -754,10 +856,30 @@ private:
 
   
 
-  序列+位操作型动态规划
+## 序列+位操作型动态规划
 
   [664. Counting Bits](https://www.lintcode.com/problem/counting-bits/description)
-  
+
+> 给出一个 **非负** 整数 num，对所有满足 `0 ≤ i ≤ num` 条件的数字 i 均需要计算其二进制表示中数字 1 的个数并以数组的形式返回。
+>
+> ### Example
+>
+> **样例1**
+>
+> ```c++
+> 输入： 5
+> 输出： [0,1,1,2,1,2]
+> 解释：
+> 0~5的二进制表示分别是：
+> 000
+> 001
+> 010
+> 011
+> 100
+> 101
+> 每个数字中1的个数为： 0,1,1,2,1,2
+> ```
+
   ```c++
   class Solution 
   {
@@ -782,12 +904,33 @@ private:
       }
   };
   ```
-  
+
   
 
 ## 划分型动态规划
 
   [512. Decode Ways](https://www.lintcode.com/problem/decode-ways/description)
+
+> 有一个消息包含`A-Z`通过以下规则编码
+>
+> ```c++
+> 'A' -> 1
+> 'B' -> 2
+> ...
+> 'Z' -> 26
+> ```
+>
+> 现在给你一个加密过后的消息，问有几种解码的方式
+>
+> ### Example
+>
+> **样例 1:**
+>
+> ```c++
+> 输入: "12"
+> 输出: 2
+> 解释: 它可以被解码为 AB (1 2) 或 L (12).
+> ```
 
 - 记忆化递归解法
 
@@ -1129,9 +1272,9 @@ private:
   };
   ```
 
-  - DP解法 将额外空间复杂度优化到`O(1)`👍
+- DP解法 将额外空间复杂度优化到`O(1)`👍
 
-    ```c++
+  ```c++
     class Solution 
     {
     public:
@@ -1170,7 +1313,7 @@ private:
             return dp1;
         }
     };
-    ```
+  ```
 
     
 
@@ -1806,15 +1949,23 @@ private:
 };
 ```
 
-
-
-------
-
 # 第四次课
 
 ## 划分型动态规划
 
 [513. Perfect Squares](https://www.lintcode.com/problem/perfect-squares/description)
+
+> 给一个正整数 n, 请问最少多少个完全平方数(比如1, 4, 9...)的和等于n。
+>
+> ### Example
+>
+> **样例 1:**
+>
+> ```c++
+> 输入: 12
+> 输出: 3
+> 解释: 4 + 4 + 4
+> ```
 
 🎈 这个题目的解法不唯一，可以使用动态规划，也可以使用BFS。
 
@@ -1878,8 +2029,21 @@ private:
 
 - 四平方和定理
 
-
 [108. Palindrome Partitioning II](https://www.lintcode.com/problem/palindrome-partitioning-ii/description)
+
+> 给定字符串 `s`, 需要将它分割成一些子串, 使得每个子串都是回文串.
+>
+> 最少需要分割几次?
+>
+> ### Example
+>
+> **样例 1:**
+>
+> ```c++
+> 输入: "a"
+> 输出: 0
+> 解释: "a" 本身就是回文串, 无需分割
+> ```
 
 - 暴力解法
 
@@ -2032,7 +2196,223 @@ private:
 
 - DP解法
 
+  ```c++
+  class Solution
+  {
+  public:
+  	/**
+  	 * @param s: A string
+  	 * @return: An integer
+  	 */
+  	int minCut(string &s)
+  	{
+  		// write your code here
+  		if (s.empty())
+  		{
+  			return 0;
+  		}
+  		int len = s.size();
+  
+  		vector<int> dp(len, INT_MAX);
+  
+  		dp[0] = 0;  //只有一个字符串不用分割
+  
+  		for (int i = 1; i < len; i++)
+  		{
+  			if (ispalindrome(s, 0, i))
+  			{
+  				dp[i] = 0;  //[0,i]本身就是回文串 不需要分割
+  				continue;
+  			}
+  
+  			for (int j = 0; j < i; j++)
+  			{
+  				if (ispalindrome(s,j + 1,i))
+  				{
+  					dp[i] = min(dp[i], dp[j] + 1);
+  				}
+  			}
+  		}
+  
+  		return dp[len - 1];
+  	}
+  private:
+  	bool ispalindrome(string s, int left, int right)
+  	{
+  		while (left <= right)
+  		{
+  			if (s[left] != s[right])
+  			{
+  				return false;
+  			}
+  			left++;
+  			right--;
+  		}
+  
+  		return true;
+  	}
+  };
+  ```
+
+  这个DP解法在lint code上可以过全部OJ，但是leet code上卡在了最后一个测试用例。😥观察这个程序可以发现`ispalindrome(s,j + 1,i)`每次都要判断一下`[j + 1,i]`是不是回文串，如果能把这个时间省掉就好了。之前leet code有一个题目[5. 最长回文子串](https://leetcode-cn.com/problems/longest-palindromic-substring/)，做一个预处理的动态规划数组，这样可以在`O(1)`的时间复杂度内得到一个字串是不是回文串。
+
+- DP解法 优化版
+
+  ```c++
+  class Solution
+  {
+  public:
+  	/**
+  	 * @param s: A string
+  	 * @return: An integer
+  	 */
+  	int minCut(string &s)
+  	{
+  	    
+  	    int n = s.size();
+          
+          vector<vector<int>> dp1(n,vector<int>(n));
+  
+          for(int l = 0;l < n;l++)
+          {
+              for(int i = 0;i + l < n;i++)
+              {
+                  int j = i + l;
+                  if(l == 0)
+                  {
+                      dp1[i][j] = 1;
+                  }
+                  else if(l == 1)
+                  {
+                      dp1[i][j] = (s[i] == s[j]);
+                  }
+                  else
+                  {
+                      dp1[i][j] = (dp1[i + 1][j - 1] & s[i] == s[j]);
+                  }   
+              }
+          }
+          
+  		// write your code here
+  		if (s.empty())
+  		{
+  			return 0;
+  		}
+  		
+  		int len = s.size();
+  
+  		vector<int> dp(len, INT_MAX);
+  
+  		dp[0] = 0;  //只有一个字符串不用分割
+  
+  		for (int i = 1; i < len; i++)
+  		{
+  			if (dp1[0][i])
+  			{
+  				dp[i] = 0;  //[0,i]本身就是回文串 不需要分割
+  				continue;
+  			}
+  
+  			for (int j = 0; j < i; j++)
+  			{
+  				if (dp1[j + 1][i])
+  				{
+  					dp[i] = min(dp[i], dp[j] + 1);
+  				}
+  			}
+  		}
+  
+  		return dp[len - 1];
+  	}
+  };
+  ```
+
+  
+
 [437. Copy Books](https://www.lintcode.com/problem/copy-books/description)
+
+> 给定 `n` 本书, 第 `i` 本书的页数为 `pages[i]`. 现在有 `k` 个人来复印这些书籍, 而每个人只能复印编号连续的一段的书, 比如一个人可以复印 `pages[0], pages[1], pages[2]`, 但是不可以只复印 `pages[0], pages[2], pages[3]` 而不复印 `pages[1]`.
+>
+> 所有人复印的速度是一样的, 复印一页需要花费一分钟, 并且所有人同时开始复印. 怎样分配这 `k` 个人的任务, 使得这 `n` 本书能够被尽快复印完?
+>
+> 返回完成复印任务最少需要的分钟数.
+>
+> ### Example
+>
+> **样例 1:**
+>
+> ```c++
+> 输入: pages = [3, 2, 4], k = 2
+> 输出: 5
+> 解释: 第一个人复印前两本书, 耗时 5 分钟. 第二个人复印第三本书, 耗时 4 分钟.
+> ```
+
+```c++
+class Solution
+{
+public:
+	/**
+	 * @param pages: an array of integers
+	 * @param k: An integer
+	 * @return: an integer
+	 */
+	int copyBooks(vector<int> &pages, int K)
+	{
+		// write your code here
+		int n = pages.size();
+		if (n == 0)
+		{
+			return 0;
+		}
+
+		vector<vector<int>> dp(K + 1, vector<int>(n + 1));
+
+		dp[0][0] = 0;
+
+		//0个抄写员 抄写1 - n本书
+		for (int i = 1; i <= n; i++)
+		{
+			dp[0][i] = INT_MAX;
+		}
+
+		//k个抄写员 抄写0本书
+		for (int i = 1; i <= K; i++)
+		{
+			dp[i][0] = 0;
+		}
+
+		int sum = 0;
+
+		for (int k = 1; k <= K; k++)
+		{
+			for (int i = 1; i <= n; i++)
+			{
+				dp[k][i] = INT_MAX;
+				for (int j = i; j >= 0; j--)
+				{
+					//int temp = std::max(dp[k - 1][j],sum);
+
+					dp[k][i] = std::min(dp[k][i], std::max(dp[k - 1][j], sum));
+
+					//sum = sum + pages[j];
+					if (j > 0)
+					{
+						sum = sum + pages[j - 1];
+					}
+				}
+				sum = 0;
+				//dp[k][i] = minresult;
+				//cout << dp[k][i] << " ";
+			}
+			//cout << endl;
+		}
+
+		return dp[K][n];
+	}
+};
+```
+
+😱 今天发现，lint code居然数组下标越界都能过OJ。
 
 ## 博弈型动态规划
 
@@ -2042,10 +2422,1144 @@ private:
 
 [92. Backpack](https://www.lintcode.com/problem/backpack/description)
 
+> 在n个物品中挑选若干物品装入背包，最多能装多满？假设背包的大小为m，每个物品的大小为A[i]。
+
+```c++
+class Solution 
+{
+public:
+    /**
+     * @param m: An integer m denotes the size of a backpack
+     * @param A: Given n items with size A[i]
+     * @return: The maximum size
+     */
+    int backPack(int m, vector<int> &A) 
+    {
+        int len = A.size();
+        
+        vector<vector<bool>> dp(len + 1,vector<bool>(m + 1));
+        dp[0][0] = true;
+        
+        //初始化
+        for(int j = 1;j <= m;j++)
+        {
+            dp[0][j] = false;
+        }
+        
+        for(int i = 1;i < len;i++)
+        {
+            dp[i][0] = true;
+        }
+        
+        for(int i = 1;i <= len;i++)
+        {
+            for(int v = 1;v <= m;v++)
+            {
+                dp[i][v] = dp[i - 1][v];
+                
+                if(v >= A[i - 1])
+                {
+                    dp[i][v] = dp[i][v] || dp[i - 1][v - A[i - 1]];
+                }
+            }
+        }
+        
+        int ans = 0;
+        
+        for(int i = m;i >= 0;i--)
+        {
+            if(dp[len][i])
+            {
+                ans = i;
+                break;
+            }
+        }
+        
+        return ans;
+        
+    }
+};
+```
+
+
+
 [563. Backpack V](https://www.lintcode.com/problem/backpack-v/description)
+
+> 给出 n 个物品, 以及一个数组, `nums[i]` 代表第i个物品的大小, 保证大小均为正数, 正整数 `target` 表示背包的大小, 找到能填满背包的方案数。
+> `每一个物品只能使用一次`
+>
+> ### Example
+>
+> 给出候选物品集合 `[1,2,3,3,7]` 以及 target `7`
+>
+> ```c++
+> 结果的集合为:
+> [7]
+> [1,3,3]
+> ```
+>
+> 返回 `2`
+
+```c++
+class Solution 
+{
+public:
+    /**
+     * @param nums: an integer array and all positive numbers
+     * @param target: An integer
+     * @return: An integer
+     */
+    int backPackV(vector<int> &nums, int target) 
+    {
+        // write your code here
+        int len = nums.size();
+        
+        vector<vector<int>> dp(len + 1,vector<int>(target + 1));
+        
+        //初始化
+        for(int j = 1;j <= target;j++)
+        {
+            dp[0][j] = 0;  //拼不出来
+        }
+        
+        for(int i = 1;i <= len;i++)
+        {
+            dp[i][0] = 1;
+        }
+        
+        dp[0][0] = 1;
+        
+        for(int i = 1;i <= len;i++)
+        {
+            for(int j = 1;j <= target;j++)
+            {
+                dp[i][j] = dp[i - 1][j];
+                
+                if(j >= nums[i - 1])
+                {
+                    dp[i][j] = dp[i][j] + dp[i - 1][j - nums[i - 1]];
+                }
+            }
+        }
+        
+        return dp[len][target];
+    }
+};
+```
+
+
 
 [564. Combination Sum IV](https://www.lintcode.com/problem/combination-sum-iv/description)
 
+> 给出一个都是正整数的数组 `nums`，其中没有重复的数。从中找出所有的和为 `target` 的组合个数。
+>
+> ### Example
+>
+> **样例1**
+>
+> ```c++
+> 输入: nums = [1, 2, 4] 和 target = 4
+> 输出: 6
+> 解释:
+> 可能的所有组合有：
+> [1, 1, 1, 1]
+> [1, 1, 2]
+> [1, 2, 1]
+> [2, 1, 1]
+> [2, 2]
+> [4]
+> ```
+
+- DP解法
+
+  ```C++
+  class Solution 
+  {
+  public:
+      /**
+       * @param nums: an integer array and all positive numbers, no duplicates
+       * @param target: An integer
+       * @return: An integer
+       */
+      int backPackVI(vector<int> &nums, int target) 
+      {
+          // write your code here
+          int len = nums.size();
+          
+          vector<int> dp(target + 1,0);
+          
+          dp[0] = 1;//
+          
+          for(int i = 1;i <= target;i++)
+          {
+              for(int j = 0;j < len;j++)
+              {
+                  if(i >= nums[j])
+                  {
+                      dp[i] = dp[i] + dp[i - nums[j]];
+                  }
+              }
+          }
+          
+          return dp[target];
+      }
+  };
+  ```
+
+  🎈 leet code有一个和这个题目差不多的题目[377. 组合总和 Ⅳ](https://leetcode-cn.com/problems/combination-sum-iv/)。但是[377. 组合总和 Ⅳ](https://leetcode-cn.com/problems/combination-sum-iv/)的范围要求比较大。
+  
+- leet code 377 DP解法
+  
+    ```c++
+    class Solution 
+    {
+    public:
+        /**
+         * @param nums: an integer array and all positive numbers, no duplicates
+         * @param target: An integer
+         * @return: An integer
+         */
+        unsigned long long combinationSum4(vector<int> &nums, int target) 
+        {
+            // write your code here
+            int len = nums.size();
+            
+            vector<unsigned long long> dp(target + 1,0);
+            
+            dp[0] = 1;//
+            
+            for(int i = 1;i <= target;i++)
+            {
+                for(int j = 0;j < len;j++)
+                {
+                    if(i >= nums[j])
+                    {
+                        dp[i] = dp[i] + dp[i - nums[j]];
+                    }
+                }
+            }
+            
+            return dp[target];
+        }
+    };
+    ```
+
+------
+
 # 第五次课
+
+## 背包动态规划
+
+[125. Backpack II](https://www.lintcode.com/problem/backpack-ii/description)
+
+> 有`n`个物品和一个大小为 `m` 的背包. 给定数组 A 表示每个物品的大小和数组 V 表示每个物品的价值.
+>
+> 问最多能装入背包的总价值是多大?
+>
+> 样例 1:
+>
+> 输入: m = 10, A = [2, 3, 5, 7], V = [1, 5, 2, 4]
+> 输出: 9
+> 解释: 装入 A[1] 和 A[3] 可以得到最大价值, V[1] + V[3] = 9 
+
+- DP解法 空间复杂度为`O(m * n)`
+
+🎈 非常典型的01背包问题。
+
+```c++
+class Solution
+{
+public:
+	/**
+	 * @param m: An integer m denotes the size of a backpack
+	 * @param A: Given n items with size A[i]
+	 * @param V: Given n items with value V[i]
+	 * @return: The maximum value
+	 */
+	int backPackII(int m, vector<int> &A, vector<int> &V)
+	{
+		// write your code here
+		int len = A.size();  //len 表示物品的个数
+		int ans = 0;
+		vector<vector<int>> dp(len + 1, vector<int>(m + 1));
+
+		//初始化
+		for (int j = 0; j <= m; j++)
+		{
+			dp[0][j] = 0;
+		}
+
+		for (int i = 1; i <= len; i++)
+		{
+			dp[i][0] = 0;
+		}
+		
+		for (int i = 1; i <= len; i++)
+		{
+			for (int j = 1; j <= m; j++)
+			{
+				dp[i][j] = dp[i - 1][j];
+
+				if (j >= A[i - 1])
+				{
+					dp[i][j] = std::max(dp[i][j], dp[i - 1][j - A[i - 1]] + V[i - 1]);
+				}
+				ans = std::max(ans,dp[i][j]);
+				//cout << "i = " << i << " j = " << j << " " << dp[i][j] //<< endl;
+			}
+		}
+
+		return ans;
+	}
+};
+```
+
+leetcode上有一个相似的题目[416. 分割等和子集](https://leetcode-cn.com/problems/partition-equal-subset-sum/)
+- 416分割等和子集DP解法
+
+  ```c++
+  class Solution 
+  {
+  public:
+      bool canPartition(vector<int>& nums) 
+      {
+          int sum = 0;
+  
+          for(int i : nums)
+          {
+              sum = sum + i;
+          }
+  
+          if(sum % 2 == 1)
+          {
+              return false;
+          }
+  
+          int target = sum / 2;
+          int len = nums.size();
+  
+          vector<vector<bool>> dp(len + 1,vector<bool>(target + 1));
+  
+          //初始化
+          for(int j = 1;j <= len;j++)
+          {
+              dp[0][j] = false;  //0个物品拼不出大于0的重量 
+          }
+  
+          for(int i = 0;i <= len;i++)
+          {
+              dp[i][0] = true;
+          }
+  
+          for(int i = 1;i <= len;i++)
+          {
+              for(int j = 1;j <= target;j++)
+              {
+                  dp[i][j] = dp[i - 1][j];
+  
+                  if(j == nums[i - 1])
+                  {
+                      dp[i][j] = true;
+                      continue;
+                  }
+  
+                  if(j > nums[i - 1])
+                  {
+                      dp[i][j] = dp[i][j] || dp[i - 1][j - nums[i - 1]];
+                  }
+              }
+          }
+  
+          return dp[len][target];
+      }
+  };
+  ```
+
+
+[LintCode 440: Backpack III]()
+
+🎈 这道题目是会员题，我没办法做。
+
+
+## 区间动态规划
+
+[667. Longest Palindromic Subsequence](lintcode.com/problem/longest-palindromic-subsequence/description)
+
+🎈 这个题目很经典，leet code上有两个类似的题目
+
+[5. 最长回文子串](https://leetcode-cn.com/problems/longest-palindromic-substring/)
+
+[516. 最长回文子序列](https://leetcode-cn.com/problems/longest-palindromic-subsequence/)
+
+注意子序列和子串是不一样的，字串必须是连续的，而子序列可以不用连续。
+
+[5. 最长回文子串](https://leetcode-cn.com/problems/longest-palindromic-substring/)
+
+- DP解法
+
+  ```c++
+  class Solution 
+  {
+  public:
+      /**
+       * @param s: the maximum length of s is 1000
+       * @return: the longest palindromic subsequence's length
+       */
+      string longestPalindrome(string &s) 
+      {
+          // write your code here
+          if(s.size() < 2)
+          {
+              return s;
+          }
+          
+          int len = s.size();
+          int ansmax = 0;
+          int left = 0;
+          int right = 0;
+          
+          vector<vector<bool>> dp(len,vector<bool>(len));
+          
+          //初始化对角线
+          for(int i = 0;i < len;i++)
+          {
+              dp[i][i] = true;
+          }
+          
+          for(int j = 1;j < len;j++)
+          {
+              for(int i = 0;i < j;i++)
+              {
+                  if(s[i] != s[j])
+                  {
+                      dp[i][j] = false;
+                  }
+                  else
+                  {
+                      if(j - i < 3)
+                      {
+                          dp[i][j] = true;
+                      }
+                      else
+                      {
+                          dp[i][j] = dp[i + 1][j - 1] && (s[i] == s[j]); 
+                      }
+                  }
+                  //cout << "i = " << i << " j = " << j << " " << dp[i][j] << endl;
+                  if(dp[i][j] && j - i > ansmax)
+                  {
+                      left = i;
+                      right = j;
+                      ansmax = j - i;
+                  }
+              }
+          }
+          return s.substr(left,ansmax + 1);
+      }
+  };
+  ```
+
+[516. 最长回文子序列](https://leetcode-cn.com/problems/longest-palindromic-subsequence/)
+
+- DP解法
+
+  ```c++
+  class Solution {
+  public:
+      /**
+       * @param s: the maximum length of s is 1000
+       * @return: the longest palindromic subsequence's length
+       */
+      int longestPalindromeSubseq(string &s) 
+      {
+          // write your code here
+          if(s.size() < 2)
+          {
+              return s.size();
+          }
+          
+          int len = s.size();
+          
+          vector<vector<int>> dp(len,vector<int>(len));
+          
+          for(int i = 0;i < len;i++)
+          {
+              dp[i][i] = 1;
+          }
+          
+          for(int i = len - 2;i >= 0;i--)
+          {
+              for(int j = i + 1;j < len;j++)
+              {
+                  if(s[i] == s[j])
+                  {
+                      dp[i][j] = dp[i + 1][j - 1] + 2;
+                  }
+                  else
+                  {
+                      dp[i][j] = std::max(dp[i + 1][j],dp[i][j - 1]); 
+                  }
+              }
+          }
+          
+          return dp[0][len - 1];
+      }
+  };
+  ```
+
+  
+
+[LintCode 396 Coins In A Line III]()
+🎈 这个题目也是VIP题。
+
+[430. Scramble String](https://www.lintcode.com/problem/scramble-string/description)
+
+- 暴力递归解法
+
+  ```c++
+  class Solution 
+  {
+  public:
+      bool isScramble(string s1, string s2) 
+      {
+          return dfs(s1,s2);
+      }
+  private:
+      bool dfs(string s1,string s2)
+      {
+          if(s1.size() != s2.size())
+          {
+              return false;
+          }
+          if(freq(s1) != freq(s2))
+          {
+              return false;
+          }
+          if(s1 == s2)
+          {
+              return true;
+          }
+          int len = s1.size();
+          for(int i = 1;i < len;i++)
+          {
+              bool flag1 = dfs(s1.substr(0,i),s2.substr(0,i)) && dfs(s1.substr(i),s2.substr(i));
+              bool flag2 = dfs(s1.substr(0,i),s2.substr(len - i)) && dfs(s1.substr(i),s2.substr(0,len - i));
+              if(flag1 || flag2)
+              {
+                  return true;
+              }
+          }
+  
+          return false;
+      }
+  
+      vector<int> freq(string_view s)
+      {
+          vector<int> f(26);
+          for(char c : s)
+          {
+              ++f[c - 'a'];
+          }
+          return f;
+      }
+  };
+  ```
+
+  🎈 这里`string_view`的作用和`const string&`的作用相同，是C++17中的新特性。
+
+  🎈 可以参考[【现代C++】性能控的工具箱之string_view](https://segmentfault.com/a/1190000018387368)
+  
+  
+
+[168. Burst Balloons](https://www.lintcode.com/problem/burst-balloons/description)
+
 # 第六次课
+
+## 双序列型动态规划
+
+[77. Longest Common Subsequence](https://www.lintcode.com/problem/longest-common-subsequence/description)
+
+> 给出两个字符串，找到最长公共子序列(LCS)，返回LCS的长度。
+>
+> ### Example
+>
+> ```c++
+> 样例 1:
+> 	输入:  "ABCD" and "EDCA"
+> 	输出:  1
+> 	
+> 	解释:
+> 	LCS 是 'A' 或  'D' 或 'C'
+> ```
+
+- DP解法
+
+  定义的状态方程为：`dp[i][j]`为`A[0:i]`和`B[0:j]`最长公共子序列的长度。
+  
+  ```c++
+  class Solution 
+  {
+  public:
+      /**
+       * @param A: A string
+       * @param B: A string
+       * @return: The length of longest common subsequence of A and B
+       */
+      int longestCommonSubsequence(string &A, string &B) 
+      {
+          if(A.empty() || B.empty())
+          {
+              return 0;
+          }
+          // write your code here
+          int len1 = A.size();
+          int len2 = B.size();
+          
+          vector<vector<int>> dp(len2,vector<int>(len1));
+          
+          //初始化
+          bool ismatch1 = false;
+          for(int j = 0;j < len1;j++)
+          {
+              if(ismatch1)
+              {
+                 dp[0][j] = 1;
+                 continue;
+              }
+              if(B[0] == A[j])
+              {
+                  dp[0][j] = 1;
+                  ismatch1 = true;
+              }
+          }
+          bool ismatch2 = false;
+          for(int i = 0;i < len2;i++)
+          {
+              if(ismatch2)
+              {
+                  dp[i][0] = 1;
+                  continue;
+              }
+              if(A[0] == B[i])
+              {
+                  dp[i][0] = 1;
+                  ismatch2 = true;
+              }
+          }
+          
+          for(int i = 1;i < len2;i++)
+          {
+              for(int j = 1;j < len1;j++)
+              {
+                  if(B[i] == A[j])
+                  {
+                      dp[i][j] = dp[i - 1][j - 1] + 1;
+                  }
+                  else if(B[i] != A[j])
+                  {
+                      dp[i][j] = std::max(dp[i - 1][j],dp[i][j - 1]);
+                  }
+              }
+          }
+          return dp[len2 - 1][len1 - 1];  
+      }
+};
+  ```
+  
+  🎈 leet code上与这个题目相同的题目[1143. 最长公共子序列](https://leetcode-cn.com/problems/longest-common-subsequence/)。
+  
+  🎈 再次吐槽一下lint code，我第一次提交的时候有一个标志位没置位居然也能提交通过，然后在leet code上直接被一个测试用例拦下来。
+  
+  - DP解法
+  
+  🎈 这种定义的状态方程为`dp[i][j]`为`A[0:i - 1]`和`B[0:j - 1]`最长公共子序列。可以看到定义的状态方程不同，初始化的时候也是不一样的。很明显这种定义状态方程写起程序来比较容易。
+  
+  ```c++
+  class Solution 
+  {
+  public:
+      int longestCommonSubsequence(string text1, string text2) 
+      {
+          int len1 = text1.size();
+          int len2 = text2.size();
+  
+          vector<vector<int>> dp(len1 + 1,vector<int>(len2 + 1));
+  
+          for(int i = 0;i <= len1;i++)
+          {
+              for(int j = 0;j <= len2;j++)
+              {
+                  if(i == 0 || j == 0)
+                  {
+                      dp[i][j] = 0;
+                      continue;
+                  }
+  
+                  if(text1[i - 1] == text2[j - 1])
+                  {
+                      dp[i][j] = dp[i - 1][j - 1] + 1;
+                  }
+                  else
+                  {
+                      dp[i][j] = std::max(dp[i - 1][j],dp[i][j - 1]);
+                  }
+              }
+          }
+  
+          return dp[len1][len2];
+      }
+  };
+  ```
+  
+  
+
+[29. Interleaving String](https://www.lintcode.com/problem/interleaving-string/description)
+
+> 给出三个字符串:*s1*、*s2*、*s3*，判断*s3*是否由*s1*和*s2*交叉构成。
+>
+> ### Example
+>
+> **样例 1：**
+>
+> ```c++
+> 输入:
+> "aabcc"
+> "dbbca"
+> "aadbbcbcac"
+> 输出:
+> true
+> ```
+
+- DP解法
+
+  ```c++
+  class Solution 
+  {
+  public:
+      /**
+       * @param s1: A string
+       * @param s2: A string
+       * @param s3: A string
+       * @return: Determine whether s3 is formed by interleaving of s1 and s2
+       */
+      bool isInterleave(string &s1, string &s2, string &s3) 
+      {
+          // write your code here
+          int len1 = s1.size();
+          int len2 = s2.size();
+          int len3 = s3.size();
+          
+          if(len1 + len2 != len3)
+          {
+              return false;
+          }
+          
+          vector<vector<bool>> dp(len2 + 1,vector<bool>(len1 + 1));
+          
+          //初始化
+          for(int j = 1;j <= len1;j++)
+          {
+              if(s3[j - 1] != s1[j - 1])
+              {
+                  //
+                  break;
+              }
+              dp[0][j] = true;
+          }
+          
+          for(int i = 1;i <= len2;i++)
+          {
+              if(s3[i - 1] != s2[i - 1])
+              {
+                  break;
+                  //
+              }
+              dp[i][0] = true;
+          }
+          
+          dp[0][0] = true;
+          
+          for(int i = 1;i <= len2;i++)
+          {
+              for(int j = 1;j <= len1;j++)
+              {
+  
+                  dp[i][j] = (dp[i][j - 1] && s3[i + j - 1] == s1[j - 1]) || (dp[i - 1][j] && s3[i + j - 1] == s2[i - 1]); 
+              }
+          }
+          
+          
+          return dp[len2][len1];
+      }
+  };
+  ```
+
+  🎈 leet code上与这个题目相同的题目 [97. 交错字符串](https://leetcode-cn.com/problems/interleaving-string/)。
+
+[119. Edit Distance](https://www.lintcode.com/problem/edit-distance/description)
+
+> 给出两个单词word1和word2，计算出将word1 转换为word2的最少操作次数。
+>
+> 你总共三种操作方法：
+> - 插入一个字符
+> - 删除一个字符
+> - 替换一个字符
+>
+> ### Example
+>
+> **样例 1:**
+>
+> ```c++
+> 输入: 
+> "horse"
+> "ros"
+> 输出: 3
+> 解释: 
+> horse -> rorse (替换 'h' 为 'r')
+> rorse -> rose (删除 'r')
+> rose -> ros (删除 'e')
+> ```
+
+- DP解法
+
+  ```C++
+  class Solution 
+  {
+  public:
+      /**
+       * @param word1: A string
+       * @param word2: A string
+       * @return: The minimum number of steps.
+       */
+      int minDistance(string &word1, string &word2) 
+      {
+          // write your code here
+          int len1 = word1.size();
+          int len2 = word2.size();
+          
+          vector<vector<int>> dp(len1 + 1,vector<int>(len2 + 1));
+          
+          //初始化
+          for(int j = 0;j <= len2;j++)
+          {
+              dp[0][j] = j; 
+          }
+          
+          for(int i = 0;i <= len1;i++)
+          {
+              dp[i][0] = i;
+          }
+          
+          for(int i = 1;i <= len1;i++)
+          {
+              for(int j = 1;j <= len2;j++)
+              {
+                  dp[i][j] = std::min(dp[i][j - 1] + 1,std::min(dp[i - 1][j - 1] + 1,dp[i - 1][j] + 1));
+                  
+                  if(word1[i - 1] == word2[j - 1])
+                  {
+                      dp[i][j] = std::min(dp[i][j],dp[i - 1][j - 1]);
+                  }
+              }
+          }
+          
+          return dp[len1][len2];
+      }
+  };
+  ```
+
+  🎈 leet code上相似的题目[72. 编辑距离](https://leetcode-cn.com/problems/edit-distance/)
+
+[118. Distinct Subsequences](https://www.lintcode.com/problem/distinct-subsequences/description)
+
+> 给定字符串 `S` 和 `T`, 计算 `S` 的所有子序列中有多少个 `T`.
+>
+> 子序列字符串是原始字符串删除一些(或零个)字符之后得到的字符串, 并且要求剩下的字符的相对位置不能改变. (比如 `"ACE"` 是 `ABCDE` 的一个子序列, 而 `"AEC"` 不是)
+>
+> ### Example
+>
+> **样例 1:**
+>
+> ```c++
+> 输入: S = "rabbbit", T = "rabbit"
+> 输出: 3
+> 解释: 你可以删除 S 中的任意一个 'b', 所以一共有 3 种方式得到 T.
+> ```
+
+- DP解法
+
+  ```c++
+  class Solution 
+  {
+  public:
+      /**
+       * @param S: A string
+       * @param T: A string
+       * @return: Count the number of distinct subsequences
+       */
+      int numDistinct(string &s, string &t) 
+      {
+          // write your code here
+          int len1 = s.size();
+          int len2 = t.size();
+          
+          vector<vector<unsigned int>> dp(len1 + 1,vector<unsigned int>(len2 + 1));
+          
+          //初始化
+          for(int j = 1;j <= len2;j++)
+          {
+              dp[0][j] = 0;
+          }
+          
+          for(int i = 0;i <= len1;i++)
+          {
+              dp[i][0] = 1;
+          }
+          
+          for(int i = 1;i <= len1;i++)
+          {
+              for(int j = 1;j <= len2;j++)
+              {
+                  dp[i][j] = dp[i - 1][j];
+                  
+                  if(s[i - 1] == t[j - 1])
+                  {
+                      dp[i][j] = dp[i - 1][j - 1] + dp[i][j];
+                  }
+                  
+                  //cout << "i = " << i << " j = " << j << " " << dp[i][j] //<< endl;
+              }
+          }
+          
+          return dp[len1][len2];
+      }
+  };
+  ```
+
+  
+
+[154. Regular Expression Matching](https://www.lintcode.com/problem/regular-expression-matching/description)
+
+🎈 正则表达式的匹配
+
+```c++
+class Solution 
+{
+public:
+    /**
+     * @param s: A string 
+     * @param p: A string includes "." and "*"
+     * @return: A boolean
+     */
+    bool isMatch(string &s, string &p) 
+    {
+        // write your code here
+        int len1 = s.size();
+        int len2 = p.size();
+        
+        vector<vector<bool>> dp(len1 + 1,vector<bool>(len2 + 1));
+        
+        for(int i = 0;i <= len1;i++)
+        {
+            for(int j = 0;j <= len2;j++)
+            {
+                if(i == 0 && j == 0)
+                {
+                    dp[i][j] = true;
+                    continue;
+                }
+                
+                if(j == 0)
+                {
+                    dp[i][j] = false;
+                    continue;
+                }
+                
+                dp[i][j] = false;
+                
+                if(p[j - 1] != '*')
+                {
+                    if(i > 0 && (p[j - 1] == '.' || s[i - 1] == p[j - 1]))
+                    {
+                        dp[i][j] = dp[i - 1][j - 1];
+                    }
+                    
+                }
+                else 
+                {
+                    if(j > 1)
+                    {
+                        dp[i][j] = dp[i][j] || dp[i][j - 2];
+                    }
+                    
+                    if(i > 0 && j > 1)
+                    {
+                        if(p[j - 2] == '.' || p[j - 2] == s[i - 1])
+                        {
+                            dp[i][j] = dp[i][j] || dp[i - 1][j];
+                        }
+                    }
+                }
+                //cout << "i = " << i  << " j = " << j << " " << //dp[i][j] << endl;
+            }
+        }
+        
+        return dp[len1][len2];
+    }
+};
+```
+
+🎈 第一遍做这个题的时候，我是参考了老师的代码，自己不是很明白，下面是我第二次做的时候代码，首先应该判断`s`和`p`是否合法，尤其是对于`p`中，`*`不可以作为第一个字符，`*`的前一个不能是`*`。第二次做的代码虽然不如老师的简洁，但是可读性比较好。
+
+- 第二次做代码
+
+  ```c++
+  class Solution 
+  {
+  public:
+      bool isMatch(string s, string p) 
+      {
+          int len1 = s.size();
+          int len2 = p.size();
+          if(!isvalid(s,p))
+          {
+              return false;
+          }
+          vector<vector<bool>> dp(len1 + 1,vector<bool>(len2 + 1));
+              
+          //初始化
+          dp[0][0] = true;
+  
+          for(int i = 1;i <= len1;i++)
+          {
+              dp[i][0] = false;
+          }
+  
+          for(int j = 1;j <= len2;j++)
+          {
+              dp[0][j] = false;
+  
+              if(p[j - 1] == '*' && dp[0][j - 2])
+              {
+                  dp[0][j] = true;
+              }
+          }
+  
+          for(int i = 1;i <= len1;i++)
+          {
+              for(int j = 1;j <= len2;j++)
+              {
+                  dp[i][j] = false;
+  
+                  if(s[i - 1] == p[j - 1] || p[j - 1] == '.')
+                  {
+                      dp[i][j] = dp[i - 1][j - 1];
+                  }
+                  else if(p[j - 1] == '*')
+                  {
+                      if(j >= 2)
+                      {
+                          dp[i][j] = dp[i][j - 2];
+  
+                          if(p[j - 2] == '.' || p[j - 2] == s[i - 1])
+                          {
+                              dp[i][j] = dp[i][j] || dp[i - 1][j];
+                          }
+                      }
+                  }
+              }
+          }
+          return dp[len1][len2];
+      }
+  private:
+      bool isvalid(string& s,string& p)
+      {
+          for(int i = 0;i < p.size();i++)
+          {
+              if(p[i] == '*' && (i == 0 || (p[i - 1] == '*')))
+              {
+                  return false;
+              }
+          }
+          
+          return true;
+      }
+  };
+  
+  ```
+
+  
+
+[192. Wildcaird Matching](https://www.lintcode.com/problem/wildcard-matching/description)
+
+🎈 通配符的匹配🤷
+
+- DP解法
+
+```c++
+class Solution 
+{
+public:
+    /**
+     * @param s: A string 
+     * @param p: A string includes "?" and "*"
+     * @return: is Match?
+     */
+    bool isMatch(string &s, string &p) 
+    {
+        // write your code here
+        int len1 = s.size();
+        int len2 = p.size();
+        
+        vector<vector<bool>> dp(len1 + 1,vector<bool>(len2 + 1));
+        
+        for(int i = 0;i <= len1;i++)
+        {
+            for(int j = 0;j <= len2;j++)
+            {
+                if(i == 0 && j == 0)
+                {
+                    dp[i][j] = true;  //空串和空的通配符匹配
+                    continue;
+                }
+                
+                if(j == 0)
+                {
+                    dp[i][j] = false;  //空的通配符不能匹配大于0的串
+                    continue;
+                }
+                
+                
+                dp[i][j] = false;
+                
+                if(p[j - 1] != '*')
+                {
+                    if(i > 0 && (s[i - 1] == p[j - 1] || p[j - 1] == '?'))
+                    {
+                        dp[i][j] = dp[i - 1][j - 1];
+                    }
+                }
+                else 
+                {
+                    dp[i][j] = dp[i][j - 1];
+                    if(i > 0)
+                    {
+                        dp[i][j] = dp[i][j] || dp[i - 1][j];
+                    }
+                }
+                //cout << "i = " << i << " j = " << j << " " << dp[i][j] << endl;
+            }
+        }
+        
+        return dp[len1][len2];
+    }
+};
+```
+
+
+
+[668. Ones and Zeroes](https://www.lintcode.com/problem/ones-and-zeroes/description)
+
+
+
 # 第七次课
